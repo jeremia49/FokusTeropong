@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@color/biru"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/tampilan"
+        android:layout_marginTop="60dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        android:src="@color/kuning"
+        android:padding="15dp"
+        android:scaleType="fitXY"
+        />
+
+    <TextView
+        android:id="@+id/recText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="REC"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="invisible"
+        />
+
+
+    <Button
+        android:id="@+id/bt1"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectanglebutton"
+        android:fontFamily="@font/poppins_bold"
+        android:padding="10dp"
+        android:text="Mulai Rekam"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@id/bt2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
+
+    <Button
+        android:id="@+id/bt2"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:background="@drawable/rectanglebutton"
+        android:fontFamily="@font/poppins_bold"
+        android:padding="10dp"
+        android:text="Jeda"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@id/bt3"
+        app:layout_constraintStart_toEndOf="@+id/bt1"
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
+
+    <Button
+        android:id="@+id/bt3"
+        android:layout_width="131dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:background="@drawable/rectanglebutton"
+        android:fontFamily="@font/poppins_bold"
+        android:padding="10dp"
+        android:text="Stop &amp; Simpan"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bt2"
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="668dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

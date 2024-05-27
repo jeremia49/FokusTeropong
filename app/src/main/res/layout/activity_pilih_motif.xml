@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl1"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:background="@color/kuning"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintEnd_toStartOf="@id/guideline10"
+        >
+
+        <ImageView
+            android:id="@+id/myImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/motif_aurum"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            />
+
+        <TextView
+            android:id="@+id/myImageViewText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/myImageView"
+            android:layout_alignRight="@+id/myImageView"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="1dp"
+            android:gravity="center"
+            android:text="AURUM"
+            android:textColor="#000000" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl2"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:background="@color/kuning"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/guideline7"
+        app:layout_constraintStart_toEndOf="@id/guideline10"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        >
+
+        <ImageView
+            android:id="@+id/myImageView2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/motif_melayu_ikan_dan_kapal"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            />
+
+        <TextView
+            android:id="@+id/myImageViewText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/myImageView2"
+            android:layout_alignRight="@+id/myImageView2"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="1dp"
+            android:gravity="center"
+            android:text="Ikan &amp; Kapal"
+            android:textColor="#000000" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl3"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:background="@color/kuning"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/rl1"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintEnd_toStartOf="@id/guideline10"
+        >
+
+        <ImageView
+            android:id="@+id/myImageView3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/motif_sirangkak"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            />
+
+        <TextView
+            android:id="@+id/myImageViewText3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/myImageView3"
+            android:layout_alignRight="@+id/myImageView3"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="1dp"
+            android:gravity="center"
+            android:text="Sirangkak"
+            android:textColor="#000000" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl4"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:background="@color/kuning"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/rl2"
+        app:layout_constraintStart_toEndOf="@id/guideline10"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        >
+
+        <ImageView
+            android:id="@+id/myImageView4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/motif_hcl"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            />
+
+        <TextView
+            android:id="@+id/myImageViewText4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/myImageView4"
+            android:layout_alignRight="@+id/myImageView4"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="1dp"
+            android:gravity="center"
+            android:text="HCL"
+            android:textColor="#000000" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl5"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:background="@color/kuning"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/rl3"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintEnd_toStartOf="@id/guideline10"
+        >
+
+        <ImageView
+            android:id="@+id/myImageView5"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/motif_purnama"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            />
+
+        <TextView
+            android:id="@+id/myImageViewText5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/myImageView5"
+            android:layout_alignRight="@+id/myImageView5"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="1dp"
+            android:gravity="center"
+            android:text="Purnama"
+            android:textColor="#000000" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl6"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:background="@color/kuning"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/rl4"
+        app:layout_constraintStart_toEndOf="@id/guideline10"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        >
+
+        <ImageView
+            android:id="@+id/myImageView6"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/motif_rumah_panggung"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            />
+
+        <TextView
+            android:id="@+id/myImageViewText6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/myImageView6"
+            android:layout_alignRight="@+id/myImageView6"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="1dp"
+            android:gravity="center"
+            android:text="Rumah Panggung"
+            android:textColor="#000000" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl7"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:background="@color/kuning"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/rl5"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintEnd_toStartOf="@id/guideline10"
+        >
+
+        <ImageView
+            android:id="@+id/myImageView7"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/motif_chemistry"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            />
+
+        <TextView
+            android:id="@+id/myImageViewText7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/myImageView7"
+            android:layout_alignRight="@+id/myImageView7"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="1dp"
+            android:gravity="center"
+            android:text="Chemistry"
+            android:textColor="#000000" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl8"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:background="@color/kuning"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/rl6"
+        app:layout_constraintStart_toEndOf="@id/guideline10"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        >
+
+        <ImageView
+            android:id="@+id/myImageView8"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/motif_pucuk_rebung"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            />
+
+        <TextView
+            android:id="@+id/myImageViewText8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/myImageView8"
+            android:layout_alignRight="@+id/myImageView8"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="1dp"
+            android:gravity="center"
+            android:text="Pucuk Rebung"
+            android:textColor="#000000" />
+    </RelativeLayout>
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.12" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

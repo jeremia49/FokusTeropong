@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.FokusTeropong" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+         <item name="colorPrimary">@color/kuning</item>
+
+        <item name="colorPrimaryVariant">@color/kuning</item>
+        <item name="colorSecondary">@color/kuning</item>
+        <item name="colorSecondaryVariant">@color/kuning</item>
+        <item name="colorAccent">@color/kuning</item>
+
+    </style>
+
+    <style name="Theme.FokusTeropong" parent="Base.Theme.FokusTeropong" />
+</resources>
