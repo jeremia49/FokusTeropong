@@ -5,6 +5,7 @@ import android.content.Context
 import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
+import coil.request.CachePolicy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +23,8 @@ object ImageLoaderModule {
     fun provideNetworkImageLoader(
         @ApplicationContext ctx: Context,
     ) : ImageLoader = ImageLoader.Builder(ctx)
+        .diskCachePolicy(CachePolicy.DISABLED)
+        .memoryCachePolicy(CachePolicy.DISABLED)
         .okHttpClient(
             Networking.createOkHttpClient(
                 ctx.cacheDir,

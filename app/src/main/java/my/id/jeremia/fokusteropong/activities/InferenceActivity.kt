@@ -104,7 +104,7 @@ class InferenceActivity : AppCompatActivity() {
                 if(isStarted){
                     imgview.setDrawingCacheEnabled(false);
                     imgview.setWillNotCacheDrawing(true);
-                    imgview.load(BASEURL+"/image?"+ (0..1_000_000).random()){
+                    imgview.load(BASEURL+"/image?time="+ System.currentTimeMillis()){
                         crossfade(true)
                     }
                     imgview.scaleType = ImageView.ScaleType.FIT_CENTER
