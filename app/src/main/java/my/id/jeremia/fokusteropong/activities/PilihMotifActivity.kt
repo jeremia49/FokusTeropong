@@ -1,12 +1,11 @@
-package my.id.jeremia.fokusteropong
+package my.id.jeremia.fokusteropong.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import my.id.jeremia.fokusteropong.R
 
 class PilihMotifActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
