@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class InferenceViewModel @Inject constructor(
+class MenuViewModel @Inject constructor(
     val machineRepository: MachineRepository,
 ) : BaseViewModel() {
 
@@ -22,35 +22,14 @@ class InferenceViewModel @Inject constructor(
 
 
     companion object {
-        val TAG = "InferenceViewModel"
-    }
-
-    suspend fun getImage() {
-
+        val TAG = "MenuViewModel"
     }
 
     suspend fun getStatus() {
         launchNetwork {
             val req = machineRepository.getStatus()
                 .first()
-//            if(req.status == "Gambar Salah!" ||req.status == "Gambar Benar!" ){
-//                _status.postValue("${req.status!!}\n${req.data!!}")
-//            }else{
-                _status.postValue(req.status!!)
-//            }
-        }
-    }
-
-    suspend fun start(){
-        launchNetwork {
-            val req = machineRepository.start()
-                .first()
-        }
-    }
-    suspend fun stop(){
-        launchNetwork {
-            val req = machineRepository.stop()
-                .first()
+            _status.postValue(req.status!!)
         }
     }
 

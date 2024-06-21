@@ -1,11 +1,13 @@
 package my.id.jeremia.fokusteropong.network
 
 
+import com.squareup.moshi.Moshi
 import my.id.jeremia.fokusteropong.BuildConfig
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -15,8 +17,14 @@ object Networking {
 
     fun<T> createService(baseUrl:String, client:OkHttpClient, service:Class<T>):T{
         return Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl("http://192.168.50.5:5000/")
             .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(
+                MoshiConverterFactory.create(
+                    Moshi.Builder().build()
+                )
+            )
+
             .client(client)
             .build()
             .create(service)

@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".activities.MainActivity">
 
 
@@ -43,6 +44,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintWidth_percent="1"
+        app:layout_constraintHeight_percent="0.8"
         android:src="@color/kuning"
         android:padding="15dp"
         android:scaleType="fitXY"
@@ -65,53 +68,110 @@
         />
 
 
-    <Button
-        android:id="@+id/bt1"
-        android:layout_width="130dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/rectanglebutton"
-        android:fontFamily="@font/poppins_bold"
-        android:padding="10dp"
-        android:text="Mulai Rekam"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@id/bt2"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/guideline"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline" />
-
-    <Button
-        android:id="@+id/bt2"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:background="@drawable/rectanglebutton"
-        android:fontFamily="@font/poppins_bold"
-        android:padding="10dp"
-        android:text="Jeda"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@id/bt3"
-        app:layout_constraintStart_toEndOf="@+id/bt1"
-        app:layout_constraintTop_toBottomOf="@id/guideline" />
-
-    <Button
-        android:id="@+id/bt3"
-        android:layout_width="131dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:background="@drawable/rectanglebutton"
-        android:fontFamily="@font/poppins_bold"
-        android:padding="10dp"
-        android:text="Stop &amp; Simpan"
-        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bt2"
-        app:layout_constraintTop_toBottomOf="@id/guideline" />
+    >
+        <Button
+            android:id="@+id/bt1"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/rectanglebutton"
+            android:fontFamily="@font/poppins_bold"
+            android:padding="10dp"
+            android:text="Mulai Rekam"
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"/>
+
+        <Button
+            android:id="@+id/bt2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/rectanglebutton"
+            android:fontFamily="@font/poppins_bold"
+            android:padding="10dp"
+            android:text="Jeda"
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"/>
+
+        <Button
+            android:id="@+id/bt3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/rectanglebutton"
+            android:fontFamily="@font/poppins_bold"
+            android:padding="10dp"
+            android:text="Stop &amp; Simpan"
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp" />
+    </LinearLayout>
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="668dp" />
+        app:layout_constraintGuide_percent="0.85" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/containerwarningtextpopup"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/white"
+        android:padding="20dp"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        >
+
+        <TextView
+            android:id="@+id/warningtextpopup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_bold"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            />
+
+        <Button
+            android:id="@+id/btnlanjutkanpopup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/rectanglebutton"
+            android:fontFamily="@font/poppins_bold"
+            android:padding="10dp"
+            android:text="LANJUTKAN"
+            android:textSize="14sp" />
+
+
+    </LinearLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

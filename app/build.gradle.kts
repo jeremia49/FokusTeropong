@@ -13,8 +13,8 @@ android {
         applicationId = "my.id.jeremia.fokusteropong"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -22,16 +22,16 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "SERVER_IPADDR", "\"10.42.0.1\"")
+            buildConfigField("String", "SERVER_IPADDR", "\"192.168.50.5\"")
             buildConfigField("String", "SERVER_PORT", "\"5000\"")
             buildConfigField("String", "SERVER_MACADDR", "\"e4:5f:01:1c:78:67\"")
-            buildConfigField("String", "SERVER_SSID", "\"Raspberry-Pi Machine\"")
+            buildConfigField("String", "SERVER_SSID", "\"RPiHotspot\"")
         }
         release {
-            buildConfigField("String", "SERVER_IPADDR", "\"10.42.0.1\"")
+            buildConfigField("String", "SERVER_IPADDR", "\"192.168.50.5\"")
             buildConfigField("String", "SERVER_PORT", "\"5000\"")
             buildConfigField("String", "SERVER_MACADDR", "\"e4:5f:01:1c:78:67\"")
-            buildConfigField("String", "SERVER_SSID", "\"Raspberry-Pi Machine\"")
+            buildConfigField("String", "SERVER_SSID", "\"RPiHotspot\"")
 
             isMinifyEnabled = false
             proguardFiles(
@@ -57,6 +57,12 @@ android {
 }
 
 dependencies {
+    implementation ("androidx.datastore:datastore-preferences:1.1.1")
+
+    // Work
+    val work = "2.9.0"
+    implementation("androidx.work:work-runtime-ktx:$work")
+
     // Image Coil
     val coil = "2.6.0"
     implementation("io.coil-kt:coil:$coil")
@@ -75,9 +81,16 @@ dependencies {
     implementation("io.github.thanosfisherman.wifiutils:wifiutils:1.6.6")
     implementation ("com.guolindev.permissionx:permissionx:1.7.1")
 
+    // Network
+    val retrofit2 = "2.11.0"
+    implementation("com.squareup.retrofit2:retrofit:$retrofit2")
+    implementation("com.squareup.retrofit2:converter-moshi:${retrofit2}")
+    implementation("com.squareup.retrofit2:converter-scalars:${retrofit2}")
 
-    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation("com.squareup.retrofit2:converter-scalars:2.11.0")
+    // JSON
+    val moshi = "1.15.0"
+    implementation("com.squareup.moshi:moshi:$moshi")
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:$moshi")
 
     val okhttp3 = "4.12.0"
     implementation(platform("com.squareup.okhttp3:okhttp-bom:$okhttp3"))

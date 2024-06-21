@@ -6,21 +6,31 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.Menu
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.menu.MenuView
+import androidx.lifecycle.lifecycleScope
 import com.thanosfisherman.wifiutils.WifiUtils
 import com.thanosfisherman.wifiutils.wifiConnect.ConnectionErrorCode
 import com.thanosfisherman.wifiutils.wifiConnect.ConnectionSuccessListener
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import my.id.jeremia.fokusteropong.BuildConfig
+import my.id.jeremia.fokusteropong.DataStore.getSavedKain
 import my.id.jeremia.fokusteropong.R
+import my.id.jeremia.fokusteropong.ViewModel.InferenceViewModel
+import my.id.jeremia.fokusteropong.ViewModel.MenuViewModel
 
 
+@AndroidEntryPoint
 class MenuActivity : AppCompatActivity() {
     var isTryingtoConnect = false;
-
+    val viewModel: MenuViewModel by viewModels()
     companion object {
         val TAG = "MenuActivity"
     }
@@ -49,12 +59,24 @@ class MenuActivity : AppCompatActivity() {
         }
 
         button2.setOnClickListener {
-            Toast.makeText(this, "Dalam pengembangan", Toast.LENGTH_SHORT).show()
+            val kain = getSavedKain(this,)
+            if(kain == null){
+                Toast.makeText(this, "Belum ada kain tersimpan !", Toast.LENGTH_SHORT).show()
+            }else{
+                val intent = Intent(this, InferenceActivity::class.java)
+                intent.putExtra("motif", kain.toInt())
+                startActivity(intent)
+            }
         }
 
         button3.setOnClickListener {
             this.finishAffinity();
         }
+
+        viewModel.status.observe(this){
+            statustxt.setText(it)
+        }
+
 
         val handler = Handler(Looper.getMainLooper())
         val r: Runnable = object : Runnable {
@@ -63,6 +85,11 @@ class MenuActivity : AppCompatActivity() {
                 if (WifiUtils.withContext(applicationContext).isWifiConnected) {
                     if (getMacId() == BuildConfig.SERVER_MACADDR) {
                         statustxt.text = "Terhubung"
+
+                        lifecycleScope.launch{
+                            viewModel.getStatus()
+                        }
+
                     } else {
                         statustxt.text =
                             "Tidak Terhubung\nPastikan terhubung ke Wifi yang benar"

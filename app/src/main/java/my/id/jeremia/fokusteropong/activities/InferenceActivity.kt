@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -21,6 +22,7 @@ import com.thanosfisherman.wifiutils.WifiUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import my.id.jeremia.fokusteropong.BuildConfig
+import my.id.jeremia.fokusteropong.DataStore.saveKain
 import my.id.jeremia.fokusteropong.R
 import my.id.jeremia.fokusteropong.ViewModel.InferenceViewModel
 import my.id.jeremia.fokusteropong.di.qualifier.BaseUrl
@@ -42,10 +44,16 @@ class InferenceActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_inference)
 
         motifresource = intent.getIntExtra("motif", R.drawable.background)
+
+        val containerwarningtextpopup = findViewById<View>(R.id.containerwarningtextpopup)
+        val warningtextpopup = findViewById<TextView>(R.id.warningtextpopup)
+        val btnlanjutkanpopup = findViewById<Button>(R.id.btnlanjutkanpopup)
 
         imgview = findViewById<ImageView>(R.id.tampilan)
         imgview.setImageDrawable(AppCompatResources.getDrawable(this, motifresource))
@@ -58,17 +66,44 @@ class InferenceActivity : AppCompatActivity() {
             if (isStarted) {
                 recText.visibility = View.VISIBLE
                 startstopbtn.text = "Stop Rekam"
+                lifecycleScope.launch{
+                    viewModel.start()
+                }
             } else {
                 recText.visibility = View.INVISIBLE
                 startstopbtn.text = "Mulai Rekam"
+                lifecycleScope.launch{
+                    viewModel.stop()
+                }
+            }
+        }
+
+        btnlanjutkanpopup.setOnClickListener {
+            if(btnlanjutkanpopup.text == "LANJUTKAN PENGERJAAN"){
+                isJeda = false;
+                containerwarningtextpopup.visibility = View.INVISIBLE
+                warningtextpopup.text = ""
+                btnlanjutkanpopup.text = ""
+            }else{
+                lifecycleScope.launch{
+                    viewModel.start()
+                }
             }
         }
 
         val jedabtn = findViewById<Button>(R.id.bt2)
         jedabtn.setOnClickListener {
             isJeda = !isJeda
-            Toast.makeText(this, "Dalam pengembangan", Toast.LENGTH_SHORT).show()
 
+            if(isJeda){
+                containerwarningtextpopup.visibility = View.VISIBLE
+                warningtextpopup.text = "PENGERJAAN SEDANG DIJEDA!!!"
+                btnlanjutkanpopup.text = "LANJUTKAN PENGERJAAN"
+            }else{
+                containerwarningtextpopup.visibility = View.INVISIBLE
+                warningtextpopup.text = ""
+                btnlanjutkanpopup.text = ""
+            }
 
 //            if(isJeda){
 //                startstopbtn.text = "Stop Rekam"
@@ -77,14 +112,33 @@ class InferenceActivity : AppCompatActivity() {
 
         val stopandsavebtn = findViewById<Button>(R.id.bt3)
         stopandsavebtn.setOnClickListener {
+            saveKain(this, motifresource.toString())
             val intent = Intent(this, MenuActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
 
         statusText = findViewById(R.id.status)
 
+
         viewModel.status.observe(this){
             statusText.setText(it)
+            if(it == "UNKNOWN") return@observe
+            warningtextpopup.text = ""
+            if(it == "Alat Ready" || it == "Gambar Benar!"){
+                containerwarningtextpopup.visibility = View.INVISIBLE
+            }else{
+                containerwarningtextpopup.visibility = View.VISIBLE
+                if(it == "Gambar Salah!" && !isJeda && isStarted){
+                    warningtextpopup.text = "MOTIF TIDAK SESUAI!!!"
+                    lifecycleScope.launch{
+                        viewModel.stop()
+                    }
+                }else{
+                    warningtextpopup.text = "TEROPONG TIDAK SESUAI!!!"
+                }
+                btnlanjutkanpopup.text = "LANJUTKAN"
+            }
         }
 
         val handler = Handler(Looper.getMainLooper())
@@ -112,7 +166,7 @@ class InferenceActivity : AppCompatActivity() {
                     imgview.setImageDrawable(AppCompatResources.getDrawable(applicationContext, motifresource))
                     imgview.scaleType = ImageView.ScaleType.FIT_XY
                 }
-                handler2.postDelayed(this, 1000)
+                handler2.postDelayed(this, 2000)
             }
         }
         handler2.postDelayed(r2, 500)
