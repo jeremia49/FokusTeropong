@@ -85,6 +85,7 @@ class InferenceActivity : AppCompatActivity() {
                 warningtextpopup.text = ""
                 btnlanjutkanpopup.text = ""
             }else{
+                containerwarningtextpopup.visibility = View.INVISIBLE
                 lifecycleScope.launch{
                     viewModel.start()
                 }
@@ -99,6 +100,9 @@ class InferenceActivity : AppCompatActivity() {
                 containerwarningtextpopup.visibility = View.VISIBLE
                 warningtextpopup.text = "PENGERJAAN SEDANG DIJEDA!!!"
                 btnlanjutkanpopup.text = "LANJUTKAN PENGERJAAN"
+                lifecycleScope.launch{
+                    viewModel.stop()
+                }
             }else{
                 containerwarningtextpopup.visibility = View.INVISIBLE
                 warningtextpopup.text = ""
@@ -126,16 +130,16 @@ class InferenceActivity : AppCompatActivity() {
             if(it == "UNKNOWN") return@observe
             warningtextpopup.text = ""
             if(it == "Alat Ready" || it == "Gambar Benar!"){
-                containerwarningtextpopup.visibility = View.INVISIBLE
+//                containerwarningtextpopup.visibility = View.INVISIBLE
             }else{
                 containerwarningtextpopup.visibility = View.VISIBLE
                 if(it == "Gambar Salah!" && !isJeda && isStarted){
                     warningtextpopup.text = "MOTIF TIDAK SESUAI!!!"
-                    lifecycleScope.launch{
-                        viewModel.stop()
-                    }
                 }else{
                     warningtextpopup.text = "TEROPONG TIDAK SESUAI!!!"
+                }
+                lifecycleScope.launch{
+                    viewModel.stop()
                 }
                 btnlanjutkanpopup.text = "LANJUTKAN"
             }
