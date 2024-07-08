@@ -13,8 +13,8 @@ android {
         applicationId = "my.id.jeremia.fokusteropong"
         minSdk = 24
         targetSdk = 34
-        versionCode = 3
-        versionName = "2.1"
+        versionCode = 4
+        versionName = "3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -22,6 +22,10 @@ android {
 
     buildTypes {
         debug {
+//            buildConfigField("String", "SERVER_IPADDR", "\"192.168.1.49\"")
+//            buildConfigField("String", "SERVER_PORT", "\"5000\"")
+//            buildConfigField("String", "SERVER_MACADDR", "\"e4:5f:01:1c:78:67\"")
+//            buildConfigField("String", "SERVER_SSID", "\"RPiHotspot\"")
             buildConfigField("String", "SERVER_IPADDR", "\"192.168.50.5\"")
             buildConfigField("String", "SERVER_PORT", "\"5000\"")
             buildConfigField("String", "SERVER_MACADDR", "\"e4:5f:01:1c:78:67\"")
@@ -33,11 +37,12 @@ android {
             buildConfigField("String", "SERVER_MACADDR", "\"e4:5f:01:1c:78:67\"")
             buildConfigField("String", "SERVER_SSID", "\"RPiHotspot\"")
 
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+//            isMinifyEnabled = true
+//            proguardFiles(
+//                getDefaultProguardFile("proguard-android-optimize.txt"),
+//                "proguard-rules.pro"
+//            )
+//            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
@@ -57,6 +62,8 @@ android {
 }
 
 dependencies {
+    implementation ("com.github.dhaval2404:imagepicker:2.1")
+
     implementation ("androidx.datastore:datastore-preferences:1.1.1")
 
     // Work

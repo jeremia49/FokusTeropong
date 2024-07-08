@@ -13,12 +13,16 @@ private val Context.dataStore by preferencesDataStore(
 )
 
 val KAIN_KEY = stringPreferencesKey("kain")
+val DETECTION_KEY = stringPreferencesKey("detect")
+val IMGNETWORK_KEY = stringPreferencesKey("imgnetwork")
 
 
-public fun saveKain(context: Context, kain: String) {
+public fun saveKain(context: Context, kain: String, detectionKey: String, imgNetwork:String) {
     runBlocking {
         context.dataStore.edit { preferences ->
             preferences[KAIN_KEY] = kain
+            preferences[DETECTION_KEY] = detectionKey
+            preferences[IMGNETWORK_KEY] = imgNetwork
         }
     }
 }
@@ -29,3 +33,18 @@ public fun getSavedKain(context: Context): String? {
         preferences[KAIN_KEY]
     }
 }
+
+public fun getSavedDetection(context: Context): String? {
+    return runBlocking {
+        val preferences = context.dataStore.data.first()
+        preferences[DETECTION_KEY]
+    }
+}
+
+public fun getSavedImgNetwork(context: Context): String? {
+    return runBlocking {
+        val preferences = context.dataStore.data.first()
+        preferences[IMGNETWORK_KEY]
+    }
+}
+

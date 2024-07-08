@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Fokus Teropong</string>
     <string name="welcome_text">Welcome to Fokus Teropong</string>
+    <string name="histori">Histori</string>
 </resources>

@@ -21,6 +21,8 @@ import com.thanosfisherman.wifiutils.wifiConnect.ConnectionSuccessListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import my.id.jeremia.fokusteropong.BuildConfig
+import my.id.jeremia.fokusteropong.DataStore.getSavedDetection
+import my.id.jeremia.fokusteropong.DataStore.getSavedImgNetwork
 import my.id.jeremia.fokusteropong.DataStore.getSavedKain
 import my.id.jeremia.fokusteropong.R
 import my.id.jeremia.fokusteropong.ViewModel.InferenceViewModel
@@ -31,6 +33,9 @@ import my.id.jeremia.fokusteropong.ViewModel.MenuViewModel
 class MenuActivity : AppCompatActivity() {
     var isTryingtoConnect = false;
     val viewModel: MenuViewModel by viewModels()
+    var handler: Handler? = null;
+    var r : Runnable? = null;
+
     companion object {
         val TAG = "MenuActivity"
     }
@@ -51,6 +56,7 @@ class MenuActivity : AppCompatActivity() {
         val button1 = findViewById<Button>(R.id.bt1)
         val button2 = findViewById<Button>(R.id.bt2)
         val button3 = findViewById<Button>(R.id.bt3)
+        val button5 = findViewById<Button>(R.id.bt5)
         val statustxt = findViewById<TextView>(R.id.status)
 
         button1.setOnClickListener {
@@ -59,58 +65,54 @@ class MenuActivity : AppCompatActivity() {
         }
 
         button2.setOnClickListener {
-            val kain = getSavedKain(this,)
-            if(kain == null){
+            val kain = getSavedKain(this)
+            if (kain == null) {
                 Toast.makeText(this, "Belum ada kain tersimpan !", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
+                val id = getSavedDetection(this)
+                val imgNetwork = getSavedImgNetwork(this)
+
                 val intent = Intent(this, InferenceActivity::class.java)
-                intent.putExtra("motif", kain.toInt())
+                intent.putExtra("id", id!!.toInt())
+                if (imgNetwork == "") {
+                    intent.putExtra("motifResource", kain.toInt())
+                } else {
+                    intent.putExtra("motifNetwork", imgNetwork)
+                }
+
                 startActivity(intent)
             }
+        }
+
+        button5.setOnClickListener {
+            val intent = Intent(this, HistoryUtama::class.java)
+            startActivity(intent)
         }
 
         button3.setOnClickListener {
             this.finishAffinity();
         }
 
-        viewModel.status.observe(this){
+        viewModel.status.observe(this) {
             statustxt.setText(it)
         }
 
 
-        val handler = Handler(Looper.getMainLooper())
-        val r: Runnable = object : Runnable {
+        handler = Handler(Looper.getMainLooper())
+        r =  object : Runnable {
             override fun run() {
 
                 if (WifiUtils.withContext(applicationContext).isWifiConnected) {
                     if (getMacId() == BuildConfig.SERVER_MACADDR) {
                         statustxt.text = "Terhubung"
 
-                        lifecycleScope.launch{
+                        lifecycleScope.launch {
                             viewModel.getStatus()
                         }
 
                     } else {
                         statustxt.text =
                             "Tidak Terhubung\nPastikan terhubung ke Wifi yang benar"
-
-                        try{
-                            WifiUtils
-                                .withContext(applicationContext)
-                                .connectWith(BuildConfig.SERVER_SSID)
-                                .setTimeout(10000)
-                                .onConnectionResult(object : ConnectionSuccessListener {
-                                    override fun success() {
-                                        statustxt.text = "Berhasil terhubung ke wifi"
-                                    }
-
-                                    override fun failed(errorCode: ConnectionErrorCode) {
-                                        Log.e(TAG, errorCode.toString());
-                                    }
-                                })
-                                .start()
-                        }catch(_:Exception){}
-
                     }
                 } else {
 
@@ -121,22 +123,6 @@ class MenuActivity : AppCompatActivity() {
                             isTryingtoConnect = true;
                             statustxt.text = "Menghubungkan ke WIFI"
 
-                            WifiUtils
-                                .withContext(applicationContext)
-                                .connectWith(BuildConfig.SERVER_SSID)
-                                .setTimeout(10000)
-                                .onConnectionResult(object : ConnectionSuccessListener {
-                                    override fun success() {
-                                        statustxt.text = "Berhasil terhubung ke wifi"
-                                    }
-
-                                    override fun failed(errorCode: ConnectionErrorCode) {
-                                        statustxt.text =
-                                            "Gagal terhubung ke wifi"
-                                        Log.e(TAG, errorCode.toString());
-                                    }
-                                })
-                                .start()
                         } catch (e: Exception) {
                             statustxt.text = "Gagal terhubung ke wifi"
                             Log.e(TAG, e.message.toString());
@@ -146,12 +132,23 @@ class MenuActivity : AppCompatActivity() {
 
                     }
                 }
-                handler.postDelayed(this, 2000)
+                handler!!.postDelayed(this, 2000)
             }
         }
 
-        handler.postDelayed(r, 500)
+        handler!!.postDelayed(r!!, 500)
 
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler!!.removeMessages(0);
+        handler!!.removeCallbacksAndMessages(null);
+    }
+
+    override fun onResume() {
+        super.onResume()
+        handler!!.post(r!!);
     }
 }

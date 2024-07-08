@@ -1,6 +1,8 @@
 package my.id.jeremia.fokusteropong.activities
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,15 +14,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.lifecycleScope
 import coil.load
 import coil.transform.CircleCropTransformation
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.thanosfisherman.wifiutils.WifiUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import my.id.jeremia.fokusteropong.BuildConfig
 import my.id.jeremia.fokusteropong.DataStore.saveKain
 import my.id.jeremia.fokusteropong.R
@@ -42,6 +48,9 @@ class InferenceActivity : AppCompatActivity() {
     @Inject
     lateinit var BASEURL : String;
 
+    var handler2:Handler? = null;
+    var runnable2:Runnable? = null;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -49,17 +58,27 @@ class InferenceActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_inference)
 
-        motifresource = intent.getIntExtra("motif", R.drawable.background)
+        motifresource = intent.getIntExtra("motifResource",-1);
 
         val containerwarningtextpopup = findViewById<View>(R.id.containerwarningtextpopup)
         val warningtextpopup = findViewById<TextView>(R.id.warningtextpopup)
         val btnlanjutkanpopup = findViewById<Button>(R.id.btnlanjutkanpopup)
 
         imgview = findViewById<ImageView>(R.id.tampilan)
-        imgview.setImageDrawable(AppCompatResources.getDrawable(this, motifresource))
+        if(motifresource == -1){
+            val motiflink = intent.getStringExtra("motifNetwork");
+            imgview.load(motiflink);
+        }else{
+            imgview.setImageDrawable(AppCompatResources.getDrawable(this, motifresource))
+        }
+
+        val iddetection = intent.getIntExtra("id",-1);
+        runBlocking {
+            viewModel.setHistoryID(iddetection)
+        }
 
         val startstopbtn = findViewById<Button>(R.id.bt1)
-        val recText = findViewById<TextView>(R.id.recText)
+        val recText = findViewById<ImageView>(R.id.recText)
         startstopbtn.setOnClickListener {
             isStarted = !isStarted
 
@@ -69,12 +88,26 @@ class InferenceActivity : AppCompatActivity() {
                 lifecycleScope.launch{
                     viewModel.start()
                 }
+                handler2!!.post(runnable2!!)
             } else {
                 recText.visibility = View.INVISIBLE
                 startstopbtn.text = "Mulai Rekam"
                 lifecycleScope.launch{
                     viewModel.stop()
                 }
+
+                handler2!!.removeMessages(0);
+                handler2!!.removeCallbacksAndMessages(null);
+
+                if(motifresource == -1){
+                    val motiflink = intent.getStringExtra("motifNetwork");
+                    imgview.load(motiflink);
+                }else{
+                    imgview.setImageDrawable(AppCompatResources.getDrawable(this@InferenceActivity, motifresource))
+                }
+                imgview.scaleType = ImageView.ScaleType.FIT_XY
+
+
             }
         }
 
@@ -116,7 +149,13 @@ class InferenceActivity : AppCompatActivity() {
 
         val stopandsavebtn = findViewById<Button>(R.id.bt3)
         stopandsavebtn.setOnClickListener {
-            saveKain(this, motifresource.toString())
+            if(motifresource == -1){
+                val motiflink = intent.getStringExtra("motifNetwork");
+                saveKain(this, "", iddetection.toString(),motiflink!! )
+            }else{
+                saveKain(this, motifresource.toString(), iddetection.toString(),"" )
+            }
+
             val intent = Intent(this, MenuActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
@@ -128,7 +167,6 @@ class InferenceActivity : AppCompatActivity() {
         viewModel.status.observe(this){
             statusText.setText(it)
             if(it == "UNKNOWN") return@observe
-            warningtextpopup.text = ""
             if(it == "Alat Ready" || it == "Gambar Benar!"){
 //                containerwarningtextpopup.visibility = View.INVISIBLE
             }else{
@@ -156,8 +194,8 @@ class InferenceActivity : AppCompatActivity() {
         }
         handler.postDelayed(r, 500)
 
-        val handler2 = Handler(Looper.getMainLooper())
-        val r2: Runnable = object : Runnable {
+        handler2 = Handler(Looper.getMainLooper())
+        runnable2 = object : Runnable {
             override fun run() {
                 if(isStarted){
                     imgview.setDrawingCacheEnabled(false);
@@ -167,13 +205,17 @@ class InferenceActivity : AppCompatActivity() {
                     }
                     imgview.scaleType = ImageView.ScaleType.FIT_CENTER
                 }else{
-                    imgview.setImageDrawable(AppCompatResources.getDrawable(applicationContext, motifresource))
+                    if(motifresource == -1){
+                        val motiflink = intent.getStringExtra("motifNetwork");
+                        imgview.load(motiflink);
+                    }else{
+                        imgview.setImageDrawable(AppCompatResources.getDrawable(this@InferenceActivity, motifresource))
+                    }
                     imgview.scaleType = ImageView.ScaleType.FIT_XY
                 }
-                handler2.postDelayed(this, 2000)
+                handler2!!.postDelayed(this, 2000)
             }
         }
-        handler2.postDelayed(r2, 500)
 
 
 

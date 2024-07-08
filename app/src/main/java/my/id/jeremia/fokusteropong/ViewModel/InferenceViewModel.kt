@@ -30,6 +30,7 @@ class InferenceViewModel @Inject constructor(
     }
 
     suspend fun getStatus() {
+        println("Getting status ...");
         launchNetwork {
             val req = machineRepository.getStatus()
                 .first()
@@ -50,6 +51,13 @@ class InferenceViewModel @Inject constructor(
     suspend fun stop(){
         launchNetwork {
             val req = machineRepository.stop()
+                .first()
+        }
+    }
+
+    suspend fun setHistoryID(id:Int){
+        launchNetwork {
+            val req = machineRepository.setHistoryID(id)
                 .first()
         }
     }

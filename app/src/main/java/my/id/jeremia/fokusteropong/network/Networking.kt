@@ -13,11 +13,11 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 
 object Networking {
-    private const val NETWORK_CALL_TIMEOUT = 60
+    private const val NETWORK_CALL_TIMEOUT = 5
 
     fun<T> createService(baseUrl:String, client:OkHttpClient, service:Class<T>):T{
         return Retrofit.Builder()
-            .baseUrl("http://192.168.50.5:5000/")
+            .baseUrl(baseUrl)
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(
                 MoshiConverterFactory.create(
